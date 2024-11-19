@@ -8,10 +8,10 @@ try {
     if(!token){
         return res.json({
             status: 401,
-            error: 'Token not found yeee'
+            error: 'Token not found!'
         });
     }
-    //verify the token if it is valid
+    //verify if token is valid
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
     if(!decodedToken){
         return res.json({

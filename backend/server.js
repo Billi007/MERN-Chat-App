@@ -5,6 +5,7 @@ import dbConnect from "./db/dbConnection.js";
 import messageRoutes from './routes/message.route.js'
 import cookieParser from "cookie-parser";
 import userRoutes from './routes/user.route.js'
+import cors from 'cors'
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -12,7 +13,11 @@ const port = process.env.PORT || 5000;
 dotenv.config();
 app.use(express.json()); // to pasrse incoming routes with JSON payload(from req.body)
 app.use(cookieParser());
-
+app.use(cors({
+    origin: "http://localhost:8000", // allow requests from the React app
+    credentials: true, // allow cookies to be sent back to the client
+    
+}))
 // app.get('/', (req,res) => {
     //     res.send("Welcome to the server!");
     // });

@@ -8,10 +8,9 @@ const signup = async(req,res) => {
     try {
  const { email, username,fullname,password, gender, confirmPassword, profilePicture} = req.body;
  if(password !== confirmPassword){
-     return res.json({
-         status: 400,
+     return res.status(400).json({
          error: 'Passwords do not match'
-        })
+     })
     }
     const finByEmail = await User.findOne({email});
     console.log(req.body)
@@ -22,11 +21,11 @@ if(finByEmail){
         message: 'Email already exists'
     })
 }
-    //Hasing password
+    //Hashing password
     const hashedPassword = await bcryptjs.hash(password,10);
     console.log(hashedPassword)
 
-    const femaleProfilePicture = `https://avatar.iran.liara.run/public/girl?username=${username}`
+    const femaleProfilePicture = `https://avatar.iran.liara.run/public/girl?username=${username}`  //Process.env.imageUrl/${username}
      const maleProfilePicture = `https://avatar.iran.liara.run/public/boy?username=${username}`
     
     const newUser = await User.create({
@@ -67,7 +66,7 @@ if(finByEmail){
 const login = async(req,res) => {
     try {
     const {email, password} = req.body;
-    const user = await User.findOne({$or: [{email}]});
+    const user = await User.findOne({email}); //todo
 
     const comparePassword = await bcryptjs.compare( password, user?.password || "") ;
     if(!user || !comparePassword){
@@ -76,7 +75,7 @@ const login = async(req,res) => {
             error: 'Invalid credentials',
         });
     }
-    generateToken(user._id, res);
+    generateToken(user?._id, res);
     
     res.status(201).json({
         _id: user._id,
