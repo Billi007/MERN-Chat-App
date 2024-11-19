@@ -25,11 +25,17 @@ const Login = () => {
         email,
         password
       })
-      toast.success("Logged in successfully");
-      console.log(response);
 
-      localStorage.setItem('chat-app-user', response);
-      setAuthUser(response);
+      if(response.status == 201){
+       toast.success("Logged in successfully");
+
+       localStorage.setItem('chat-app-user', response);
+       setAuthUser(response);
+        
+      }else {
+        toast.error("Invalid ");
+      }
+      console.log(response?.data);
 
     } catch (error) {
       toast.error("Error while Logging in",error.message);
@@ -93,6 +99,4 @@ const Login = () => {
 }
 
 export default Login
-
-
 

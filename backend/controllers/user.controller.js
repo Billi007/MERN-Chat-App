@@ -2,9 +2,10 @@ import User from "../models/user.model.js";
 
 const getUserForSidebar = async (req, res) => {
     try {
-        const loggedInuserId = req.user._id;
+        console.log("mera request",req)
+        const {email} =  req.body;
 
-        const filteredUser = await User.find({_id: {$ne: loggedInuserId}}).select('-password');
+        const filteredUser = await User.find().select('-password');
 
         res.status(200).json(filteredUser)
         
@@ -18,3 +19,6 @@ const getUserForSidebar = async (req, res) => {
 }
 
 export {getUserForSidebar}
+// find with email (req.body)
+//can't set cookies during login that's why it can't authenticate
+//send cookies
