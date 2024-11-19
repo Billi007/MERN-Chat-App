@@ -157,7 +157,7 @@ const Signup = () => {
     </div>
 
     <Link to='/login' className="text-sm text-white hover:underline hover:text-blue-600 mt-2 inline-block">
-      {"Don't"} have an account?
+      Already have a account?
     </Link>
   <button 
   disabled={loading}
