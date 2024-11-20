@@ -1,9 +1,12 @@
+/* eslint-disable no-undef */
 // import '../../App.css'
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { useAuthContext } from "../../context/AuthContext"
+const BASE_URL = "http://localhost:5000";
+
 const Login = () => {
   const [loading,setLoading] = useState(false);
   const [data, setData] = useState({
@@ -21,21 +24,21 @@ const Login = () => {
        const {email, password} = data;
 
       // API call to login user
-      const response = await axios.post('http://localhost:5000/api/auth/login', {
+      const response = await axios.post(`${BASE_URL}/api/auth/login`, {
         email,
         password
       })
-
+      console.log(response.data?._id);
       if(response.status == 201){
        toast.success("Logged in successfully");
-
+      
        localStorage.setItem('chat-app-user', response);
+       localStorage.setItem('sender_id', response.data?._id);
        setAuthUser(response);
         
       }else {
-        toast.error("Invalid ");
+        toast.error("Invalid Credentials!");
       }
-      console.log(response?.data);
 
     } catch (error) {
       toast.error("Error while Logging in",error.message);

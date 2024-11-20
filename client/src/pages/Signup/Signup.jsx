@@ -55,7 +55,6 @@ const Signup = () => {
         fullname
       });
       toast.success("Signup Successful!");
-      console.log(response.data)
       
 
       //localstorage

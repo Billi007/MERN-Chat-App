@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react"
 import Conversation from "./Conversation"
 import axios from "axios"
+
 const Conversations = () => {
   const [loading, setLoading] = useState(false);
   const [conversations, setConversations] = useState([]);
-  //console.log(conversations)
-
-
+  const BASE_URL = "http://localhost:5000";
+  
   useEffect(() => {
     const getCoversations = async () => {
       setLoading(true);
 
     try {
-      const response = await axios.get("http://localhost:5000/api/users");
-      console.log(response?.data);
+      const response = await axios.get(`${BASE_URL}/api/users`);
+  
       
       if(response.data.error){
         throw new Error(response.data.error)

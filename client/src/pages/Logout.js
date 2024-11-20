@@ -12,7 +12,6 @@ const useLogout = () => {
     try {
         const response = await axios.post('http://localhost:5000/api/auth/logout');
         toast.success("User logged out successfully!")
-        console.log(response.data);
 
         if(response.data.error){
             throw new Error(response.data.error);

@@ -5,18 +5,19 @@ import Message from "../models/message.model.js";
 //SEND MESSAGE
 const sendMessage = async(req,res) => {
 
+    console.log("send message", req.body)
  try {
-    const {message} = req.body;
+    const {message, senderId} = req.body;
     const {id: receiverId} = req.params;
-    const senderId = req.user._id;
 
-    let conversation = await Conversation.findOne({
+    let FindConversation = await Conversation.findOne({
         participants: {$all: [senderId, receiverId]},
     });
-
-    if(!conversation){
-       conversation =  await Conversation.create({
+ 
+    if(!FindConversation){
+        FindConversation =  await Conversation.create({
             participants: [senderId, receiverId],
+            messages: [],
         })
     }
 
@@ -27,10 +28,10 @@ const sendMessage = async(req,res) => {
     })
     
     if(newMessage){
-     conversation.messages.push(newMessage._id)
+        FindConversation.messages.push(newMessage._id)
     }
 
-    await Promise.all([conversation.save(), newMessage.save()])
+    await Promise.all([FindConversation.save(), newMessage.save()])
 
     res.status(201).json(newMessage)
 
