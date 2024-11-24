@@ -1,36 +1,29 @@
 import {useAuthContext} from '../../context/AuthContext'
 //import useConversation from '../../zustand/UseCoversation';
 const Message = ({message}) => {
+//console.log(message)
  const {authUser} = useAuthContext();
  //const {selectedConversation} = useConversation();
  const fromMe = message.senderId === authUser._id;
- const chatClassName = fromMe ? "chat-end" : "chat-start";
- const MessageBgColor = fromMe ? "bg-sky-500" : "";
+ const chatClassName = fromMe ? "chat-start" : "chat-end";
+ const MessageBgColor = fromMe ? "" : "bg-sky-600";
 
 
- function extractTime(dateString) {
- const date = new Date(dateString);
- const hours = padZero(date.getHours());
- const minutes = padZero(date.getMinutes());
- return `${hours} ${minutes}`;
- }
+ const createdAt = new Date(message.createdAt);
+ const formattedTime = createdAt.toLocaleTimeString([], {
+   hour: "2-digit",
+   minute: "2-digit",
+ });
 
-  function padZero(number) {
-    return number.toString().pasStart(2, "0")
-  }
   return (
-    <div className= {`chat ${chatClassName}`}>
-   <div className="chat-image avatar">
- <div className="w-10 rounded-full">
- <img 
- src="" 
- alt="" />
- </div>
+  <div className='p-2 '>
+   <div className={`flex flex-col chat ${chatClassName}`}>
+     <div className={`chat-bubble text-white text-sm ${MessageBgColor}`}>{message.message} </div>
+     <p className='text-gray-700 text-xs '>{formattedTime} </p>
    </div>
 
-   <div className={`chat-bubble text-white ${MessageBgColor}`}>{message.message} </div>
-   <div className="chat-footer opacity-50 text-xs flex gap-1 items-center">{extractTime} </div>
-    </div>
+   <div className='chat chat-start'></div>
+  </div>
   )
 }
 

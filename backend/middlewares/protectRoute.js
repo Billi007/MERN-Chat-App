@@ -4,27 +4,29 @@ import User from '../models/user.model.js';
 const protectRoute = async (req, res, next) => {
 try {
     // extract token from cookies
-    const token  = req.cookies.jwt;
+    const token  = req.cookies?.jwt;
     if(!token){
-        return res.json({
-            status: 401,
+        //todo = Avoid exposing too much information about why a token is invalid
+        return res.status(401).json({
             error: 'Token not found!'
         });
     }
+
     //verify if token is valid
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    let decodedToken;
+     decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
     if(!decodedToken){
-        return res.json({
-            status: 401,
-            error: 'Token is not valid'
+        return res.status(401).json({
+            error: 'Invalid token'
         });
     }
-
+ 
+     // Check if user exists
     const user = await User.findById(decodedToken?.userId).select('-password')
     if(!user){
-        return res.json({
-            status: 401,
-            error: 'User not found'
+        return res.status(401).json({
+            error: 'Unauthorized, user not found',
         });
     }
     
@@ -33,10 +35,10 @@ try {
 
 } catch (error) {
     console.log("Error in Protect Route middleware:", error.message);
-    res.json({
+    res.status(500).json({
         success: false,
-        error: 'Token is not valid'
-    })
+        error: 'Server error'
+    });
 }
 };
 

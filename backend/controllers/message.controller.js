@@ -4,11 +4,10 @@ import Message from "../models/message.model.js";
 
 //SEND MESSAGE
 const sendMessage = async(req,res) => {
-
-    console.log("send message", req.body)
  try {
-    const {message, senderId} = req.body;
+    const {message} = req.body;
     const {id: receiverId} = req.params;
+    const senderId = req.user._id;
 
     let FindConversation = await Conversation.findOne({
         participants: {$all: [senderId, receiverId]},
@@ -52,7 +51,7 @@ const getMesages = async (req, res) => {
 
     const conversation = await Conversation.findOne({
         participants: {$all: [senderId, userToChatId]},
-    }).populate("messages");
+    }).populate("messages", "senderId");
     
     if(!conversation) return res.status(200).json([]);
     const messages = conversation.messages

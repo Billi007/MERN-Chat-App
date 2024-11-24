@@ -6,7 +6,7 @@ const LogoutBtn = () => {
   return (
     <div className='mt-auto'>
    {!loading ? (
-    <CiLogout onClick={Logout} className="w-6 h-6 text-white cursor-pointer" />
+    <CiLogout onClick={Logout} className="w-6 h-6 m-4 text-white cursor-pointer" />
    ) : (
     <span className="loading loading-spinner"></span>
    )}

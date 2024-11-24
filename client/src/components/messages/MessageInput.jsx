@@ -9,20 +9,20 @@ const MessageInput = () => {
   const [loading, setLoading] = useState("");
   const [message, setMessage] = useState("");
   const {messages, setMessages,selectedConversation} = useConversation();
+  const BASE_URL = "http://localhost:5000"
 
-  const BASE_URL = process.env.BACKEND_API_URL;
   const handleSubmit = async (e) => {
    e.preventDefault();
    setLoading(true);
 
    if(!message) return;
 
-   console.log("selectedConversation ki id", selectedConversation._id);
+   //console.log("selectedConversation ki id", selectedConversation._id);
     try {
       const response = await axios.post(`${BASE_URL}/api/messages/send/${selectedConversation._id}`, {
         message: message,
-         senderId: localStorage.getItem("sender_id")
-      });
+      }, {withCredentials: true, }
+    );
       console.log("send message", response?.data);
       setMessage("");
 

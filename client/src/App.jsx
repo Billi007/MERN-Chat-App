@@ -9,7 +9,7 @@ function App() {
  const {authUser} = useAuthContext()
   return (
     <>
-    <div className='p-4 flex items-center justify-center'>
+    <div className='min-h-screen p-4 flex items-center justify-center bg-gradient-to-br from-black to-purple-800  '>
       <Toaster position="bottom-right" />
     <Routes>
       <Route path='/' element={authUser ? <Home/> : <Navigate to='/login' />}/>

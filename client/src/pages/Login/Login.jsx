@@ -1,105 +1,130 @@
-/* eslint-disable no-undef */
-// import '../../App.css'
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import axios from 'axios'
-import toast from 'react-hot-toast'
-import { useAuthContext } from "../../context/AuthContext"
+import "./login.css";
+import { FaUserCircle } from "react-icons/fa";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useAuthContext } from "../../context/AuthContext";
 const BASE_URL = "http://localhost:5000";
 
 const Login = () => {
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
-    email: '',
-    password: ''
+    email: "",
+    password: "",
   });
-  const {setAuthUser} = useAuthContext();
-  
+  const { setAuthUser } = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
-       const {email, password} = data;
+      const { email, password } = data;
 
       // API call to login user
-      const response = await axios.post(`${BASE_URL}/api/auth/login`, {
-        email,
-        password
-      })
-      console.log(response.data?._id);
-      if(response.status == 201){
-       toast.success("Logged in successfully");
-      
-       localStorage.setItem('chat-app-user', response);
-       localStorage.setItem('sender_id', response.data?._id);
-       setAuthUser(response);
-        
-      }else {
+      const response = await axios.post(
+        `${BASE_URL}/api/auth/login`,
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
+      setData("");
+
+      if (response.status == 201) {
+        toast.success("Logged in successfully");
+
+        localStorage.setItem("chat-app-user", response);
+        localStorage.setItem("sender_id", response.data?._id);
+        setAuthUser(response);
+      } else {
         toast.error("Invalid Credentials!");
       }
-
     } catch (error) {
-      toast.error("Error while Logging in",error.message);
-      console.log(error.message)
-    }
-
-    finally{
+      toast.error("Error while Logging in", error.message);
+      console.log(error.message);
+    } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className= "flex flex-col items-center min-w-80 justify-center w-[400px]">
-      <div className="w-full p-6 rounded-md shadow-md bg-gray-400 bg-clip-padding backdrop-filter
-      backdrop-blur-lg bg-opacity-0">
-      
-      <div className="flex items-center justify-center text-white text-3xl font-semibold text-center gap-2">
-      <h1 className='heading text-3xl font-semibold '>Login</h1>
-      <h1 className="text-[#bfbfff] " >Chatty</h1>
-      </div>
-    <form onSubmit={handleSubmit}>
+    <div className="flex flex-col items-center justify-center min-w-80 mx-auto">
+      <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 glass bg-opacity-0">
+        <div className="flex justify-center">
+          <FaUserCircle className="text-6xl text-white mb-8" />
+        </div>
 
-      <div>
-        <label className="label p-2 ">
-          <span className="text-base label-text text-white">Email</span>
-        </label>
-         <input 
-         value={data.email}
-         onChange={e => setData({...data, email: e.target.value})}
-        type="text" 
-        placeholder="Enter your email"
-        className="w-full input-bordered h-10 rounded-sm p-2"
-        />
-      </div>
+        <form onSubmit={handleSubmit}>
 
-      <div>
-        <label className="label p-2  text-white">
-          <span className="text-base label-text text-white">Password</span>
-        </label>
-         <input 
-         value={data.password}
-         onChange={e => setData({...data, password: e.target.value})}
-        type="text" 
-        placeholder="Enter password"
-        className="w-full input-bordered h-10 rounded-sm p-2"
-        />
-      </div>
+          <div className="my-5">
+            <label className="input input-bordered flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="h-4 w-4 opacity-70 "
+              >
+                <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
+                <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
+              </svg>
+              <input 
+              value={data.email}
+              onChange={e => setData({...data, email: e.target.value})}
+              type="text" 
+              className="grow" 
+              placeholder="Email" />
+            </label>
+          </div>
 
-      <Link to='/signup' className="text-sm text-white hover:underline hover:text-blue-600 mt-2 inline-block">
-        {"Don't"} have an account?
-      </Link>
-    <button 
-    disabled={loading}
-    className="btn btn-block btn-sm mt-2 rounded-sm">
-    {loading ? <span className="loading loading-spinner"/> : "Login"}
-    </button>
-    </form>
+          <div>
+            <label className="input input-bordered flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="h-4 w-4 opacity-70"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <input 
+               value={data.password}
+               onChange={e => setData({...data, password: e.target.value})}
+              type="password" 
+              placeholder="Password" 
+              className="grow"  />
+            </label>
+          </div>
+
+          <Link
+            to="/signup"
+            className="text-xs  hover:underline hover:text-blue-600 mt-2 inline-block text-white"
+          >
+            {"Don't"} have an account?
+          </Link>
+
+          <div>
+            <button
+              className="btn btn-block btn-sm mt-4 bg-sky-700 rounded-sm hover:bg-sky-800 border-none text-white"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="loading loading-spinner "></span>
+              ) : (
+                "Login"
+              )}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
-
+export default Login;
