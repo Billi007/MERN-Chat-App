@@ -2,13 +2,13 @@ import './Signup.css'
 import GenderChecker from '../Signup/GenderChecker'
 import { Link} from 'react-router-dom'
 import { useState } from 'react'
+import {useAuthContext} from "../../context/AuthContext"
 import toast from 'react-hot-toast'
 import { FaUserCircle } from "react-icons/fa";
 import axios from 'axios'
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
-  const [authUser, setAuthUser] = useState();
   const [inputs, setInputs] = useState({
     fullname: "",
     username: "",
@@ -17,7 +17,8 @@ const Signup = () => {
     gender: "",
     confirmPassword: "",
   });
-  
+  const {setAuthUser} = useAuthContext();
+
   const handleGenderChange = (gender) => {
     setInputs({...inputs, gender});
   }
@@ -58,12 +59,10 @@ const Signup = () => {
       setInputs("")
       
       toast.success("Signup Successfull");
-      
-
       //localstorage
       localStorage.setItem('chat-app-user', JSON.stringify(response));
       //context
-      setAuthUser(response);
+      setAuthUser(response.data);
       
 
    } catch (error) {
@@ -72,7 +71,6 @@ const Signup = () => {
    }finally{
     setLoading(false)
    }
-   return {loading, authUser}
     };
 
 

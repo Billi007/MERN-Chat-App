@@ -1,10 +1,11 @@
 import useConversation from "../../zustand/UseCoversation";
-
+import { UseSocketContext } from "../../context/SocketContext";
 const Conversation = ({conversation}) => {
 
   const {selectedConversation, setSelectedConversation} = useConversation();
   const isSelected = selectedConversation?._id === conversation._id;
-  
+  const {onlineUsers} = UseSocketContext();
+  const isOnline =  onlineUsers.includes(conversation._id);
 
 
   return (
@@ -16,15 +17,17 @@ const Conversation = ({conversation}) => {
     <div className="flex space-x-4 px-8 py-3 hover:bg-slate-700 duration-300
      cursor-pointer">
        
-        <div className={`avatar`}>
+        <div className={`avatar ${isOnline ? "online" : ""} `}>
           <div className="w-8 rounded-full">
-            <img src="https://img.freepik.com/premium-vector/man-women-different-avatars-illustration-vector-art-design_666656-112.jpg" alt="dp" />
+            <img src={conversation. profilePicture} />
           </div>
           
         </div>
-        <div>
-          <h1 className="font-normal">{conversation.fullname}</h1>
-        </div>
+        <div className='flex flex-col flex-1'>
+					<div className='flex gap-3 justify-between'>
+						<p className='text-white'>{conversation.fullname}</p>
+					</div>
+				</div>
 
       </div>
     </div>

@@ -12,7 +12,7 @@ function App() {
     <div className='min-h-screen p-4 flex items-center justify-center bg-gradient-to-br from-black to-purple-800  '>
       <Toaster position="bottom-right" />
     <Routes>
-      <Route path='/' element={authUser ? <Home/> : <Navigate to='/login' />}/>
+      <Route path='/' element={authUser ? <Home/> : <Navigate to={'/login'} />}/>
       <Route path='/login' element={authUser ? <Navigate to='/' /> : <Login/>}/>
       <Route path='/signup' element={authUser ? <Navigate to='/' /> : <Signup/>}/>
     </Routes>

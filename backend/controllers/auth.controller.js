@@ -1,115 +1,99 @@
-import User from '../models/user.model.js';
-import bcryptjs from 'bcryptjs'
-import generateToken from '../utils/generateToken.js';
-
+import User from "../models/user.model.js";
+import bcryptjs from "bcryptjs";
+import generateToken from "../utils/generateToken.js";
 
 //SIGNUp
-const signup = async(req,res) => {
-    try {
- const { email, username,fullname,password, gender, confirmPassword, profilePicture} = req.body;
- if(password !== confirmPassword){
-     return res.status(400).json({
-         error: 'Passwords do not match'
-     })
+const signup = async (req, res) => {
+  try {
+    const {
+      email,
+      username,
+      fullname,
+      password,
+      gender,
+      confirmPassword,
+      profilePicture,
+    } = req.body;
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        error: "Passwords do not match",
+      });
     }
-    const finByEmail = await User.findOne({email});
-    console.log(req.body)
+    const findByEmail = await User.findOne({ email });
 
-if(finByEmail){
-    return res.json({
+    if (findByEmail) {
+      return res.json({
         status: 400,
-        message: 'Email already exists'
-    })
-}
+        message: "Email already exists",
+      });
+    }
     //Hashing password
-    const hashedPassword = await bcryptjs.hash(password,10);
-    console.log(hashedPassword)
+    const hashedPassword = await bcryptjs.hash(password, 10);
 
-    const femaleProfilePicture = `https://avatar.iran.liara.run/public/girl?username=${username}`  //Process.env.imageUrl/${username}
-     const maleProfilePicture = `https://avatar.iran.liara.run/public/boy?username=${username}`
-    
-    const newUser = await User.create({
-        username,
-        email,
-        fullname,
-        password: hashedPassword,
-        profilePicture: gender == "male" ? maleProfilePicture : femaleProfilePicture,
-        gender
-    })
+    const femaleProfilePicture = `https://avatar.iran.liara.run/public/girl?username=${username}`; //Process.env.imageUrl/${username}
+    const maleProfilePicture = `https://avatar.iran.liara.run/public/boy?username=${username}`;
 
-    if(newUser){
-    //Generate JWT token here
-    generateToken(newUser._id, res);
-    await newUser.save();
-
-    res.json({
-        status: 201,
-        message: 'User created successfully',
-        newUser
-    })
-}else {
-    res.json({
-        status: 500,
-        error: 'Invalid user data',
+    const newUser = new User({
+      username,
+      email,
+      fullname,
+      password: hashedPassword,
+      profilePicture:
+        gender == "male" ? maleProfilePicture : femaleProfilePicture,
+      gender,
     });
+
+    if (newUser) {
+      //Generate JWT token here
+      generateToken(newUser._id, res);
+      await newUser.save();
+
+      res.status(201).json({
+        message: "User created successfully",
+        newUser,
+      });
+    } else {
+      res.status(400).json({ error: "Invalid user data" });
+    }
+  } catch (error) {
+    console.log("An error occurred while creating the user", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
 
-} catch (error) {
-    console.log("An error occurred while creating the user", error.message)
-    res.json({
-        status: 500,
-        error: 'Internal Server Error',
-    })
-}};
-
 //LOGIN
-const login = async(req,res) => {
-    try {
-    const {email, password} = req.body;
-    const user = await User.findOne({email}); //todo
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email }); //todo
 
-    const comparePassword = await bcryptjs.compare( password, user?.password || "") ;
-    if(!user || !comparePassword){
-        return res.json({
-            status: 401,
-            error: 'Invalid credentials',
-        });
+    const comparePassword = await bcryptjs.compare(
+      password,
+      user?.password || ""
+    );
+    if (!user || !comparePassword) {
+      return res.status(400).json({ error: "Invalid credentials" });
     }
     generateToken(user?._id, res);
-    
+
     res.status(201).json({
-        _id: user._id,
-        fullname: user.fullname,
-        username: user.username,
-        email: user.email,
-        profilePicture: user.profilePicture,
+      message: "User logged in successfully",
+      user,
     });
-
-    } catch (error) {
-        console.log("error login", error.message)
-        return res.status(500).json({
-            status: 500,
-            message: 'Server Error',
-        });
-    }
-}
-
-
+  } catch (error) {
+    console.log("error login", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 //LOGOUT
 const logout = (req, res) => {
-    try {
-    res.cookie('jwt', "", {maxAge:0});
-    res.json({
-        status: 200,
-        message: 'Logged out successfully',
-    });
-    } catch (error) {
-        console.log("error logging out", error.message)
-        res.json({
-            status: 500,
-            message: 'Server Error',
-        })
-    }
-}
-export {signup, login, logout}
+  try {
+    res.cookie("jwt", " ", { maxAge: 0 });
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log("error logging out", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+export { signup, login, logout };

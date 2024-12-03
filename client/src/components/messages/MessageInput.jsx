@@ -51,7 +51,7 @@ const MessageInput = () => {
             placeholder="enter message..."
             />
             <button type="submit" className="absolute inset-y-0 end-0 flex items-center pe-3">
-           {message ?  <IoMdSend className="text-white"/> : ""  }
+           {message ?  <IoMdSend className="text-blue-400"/> : ""  }
             </button>
         </div>
     </form>

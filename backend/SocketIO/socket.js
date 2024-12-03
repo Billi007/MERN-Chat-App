@@ -9,7 +9,11 @@ const io = new Server(server,{
         origin: 'http://localhost:8000',
         methods: ['GET', 'POST']
     }
-})
+});
+
+export const getReceiverSocketId = (receiverId) => {
+ return users[receiverId];
+}
 
 const users = {}
 //ScoketIO
@@ -17,8 +21,9 @@ io.on("connection", (socket) => {
     console.log("new user connected! " + socket.id);
 
     const userid = socket.handshake.query.userId;
-    if(!userid == 'undefined') users[userid] = socket.Id;
+    if(userid != 'undefined') users[userid] = socket.Id;
 
+    //creating a new event to check if user is online
     io.emit("getOnlineUsers", Object.keys(users))
 
 

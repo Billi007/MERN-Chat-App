@@ -2,10 +2,12 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {useAuthContext} from './AuthContext'
 import io from 'socket.io-client'
 
+
 const SocketContext = createContext();
-export const useSocketContext = () => {
-    return useContext(SocketContext)
-};
+export const UseSocketContext = () => {
+    return useContext(SocketContext);
+  };
+  
 
 export const SocketProvider = function({children}) {
 const [socket, setSocket] = useState(null);
@@ -16,15 +18,16 @@ useEffect(() => {
     if(authUser){
        const socket = io('http://localhost:5000', {
        query: {
-        userId : authUser._id
+        userId : authUser?.user._id
        }});
-
        setSocket(socket);
 
        socket.on('getOnlineUsers', (users) => {
         setOnlineUsers(users);
-       })
-       return () => socket.close();  //cleanup funtcion if the user is not verified.
+       });
+
+       //cleanup funtcion if the user is not verified.
+       return () => socket.close();  
     } else {
         if(socket){
             socket.close();

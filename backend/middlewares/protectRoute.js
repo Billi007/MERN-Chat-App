@@ -6,28 +6,20 @@ try {
     // extract token from cookies
     const token  = req.cookies?.jwt;
     if(!token){
-        //todo = Avoid exposing too much information about why a token is invalid
-        return res.status(401).json({
-            error: 'Token not found!'
-        });
+    return res.status(401).json({ error: "Unauthorized - No Token Provided" });
     }
 
     //verify if token is valid
-    let decodedToken;
-     decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
     if(!decodedToken){
-        return res.status(401).json({
-            error: 'Invalid token'
-        });
+    return res.status(401).json({ error: "Unauthorized - Invalid Token" });
     }
  
      // Check if user exists
     const user = await User.findById(decodedToken?.userId).select('-password')
     if(!user){
-        return res.status(401).json({
-            error: 'Unauthorized, user not found',
-        });
+    return res.status(404).json({ error: "User not found" });
     }
     
     req.user = user;
@@ -35,10 +27,7 @@ try {
 
 } catch (error) {
     console.log("Error in Protect Route middleware:", error.message);
-    res.status(500).json({
-        success: false,
-        error: 'Server error'
-    });
+    res.status(500).json({ error: "Internal server error" });
 }
 };
 

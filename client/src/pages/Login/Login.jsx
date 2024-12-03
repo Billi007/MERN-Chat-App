@@ -15,6 +15,15 @@ const Login = () => {
   });
   const { setAuthUser } = useAuthContext();
 
+  // function handleInputErrors(username, password) {
+  //   if (!username || !password) {
+  //     toast.error("Please fill in all fields");
+  //     return false;
+  //   }
+  
+  //   return true;
+  // }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -32,16 +41,14 @@ const Login = () => {
         { withCredentials: true }
       );
       setData("");
+      console.log( "login success", response)
 
       if (response.status == 201) {
         toast.success("Logged in successfully");
-
-        localStorage.setItem("chat-app-user", response);
-        localStorage.setItem("sender_id", response.data?._id);
-        setAuthUser(response);
-      } else {
-        toast.error("Invalid Credentials!");
       }
+
+      localStorage.setItem("chat-app-user",JSON.stringify(response.data));
+      setAuthUser(response.data);
     } catch (error) {
       toast.error("Error while Logging in", error.message);
       console.log(error.message);

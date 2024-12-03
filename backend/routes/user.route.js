@@ -1,8 +1,8 @@
 import { Router } from "express";
 const router = new Router();
-import protectRoute from "../middlewares/protectRoute.js";
-import { getUserForSidebar } from "../controllers/user.controller.js";
+import  getUserForSidebar from '../controllers/user.controller.js'
+import protectRoute from '../middlewares/protectRoute.js'
 
-router.get('/', getUserForSidebar)  //get all users
+router.get('/', protectRoute, getUserForSidebar)  //get all users
 
 export default router
