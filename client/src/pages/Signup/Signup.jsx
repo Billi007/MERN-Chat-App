@@ -7,41 +7,14 @@ import toast from 'react-hot-toast'
 import { FaUserCircle } from "react-icons/fa";
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
+import signupSchema from '../../schema/signup'
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
   const {setAuthUser} = useAuthContext();
   const BASE_URL = "http://localhost:5000";
 
-
-  const signupSchema = yup.object().shape({
-    email: yup
-    .string()
-    .email('Invalid email address.')
-    .required('Email is required.'),
-
-    password: yup
-    .string()
-    .min(6, "Password must be at least 6 characters long")
-    .required("Password is required."),
-
-    confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('password'), null], 'Passwords must match.')
-    .required('Password is required.'),
-
-    username: yup
-    .string().required('Username is required.')
-    .min(3, "Username must be at least 3 characters"),
-
-    fullname: yup
-    .string().required('Full name is required.'),
-
-    gender: yup
-    .string().required('Gender is required.')
-  })
 
   const {handleSubmit, register, setValue, formState: { errors }} = useForm({
     defaultValues: {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IoMdSend } from "react-icons/io";
+import { IoIosSend } from "react-icons/io";
 import useConversation from '../../zustand/UseCoversation'
 import axios from 'axios'
 import toast from 'react-hot-toast'
@@ -50,7 +50,7 @@ const MessageInput = () => {
             placeholder="enter message..."
             />
             <button type="submit" className="absolute inset-y-0 end-0 flex items-center pe-3">
-           {message ?  <IoMdSend className="text-white"/> : ""  }
+           {message ?  <IoIosSend className="text-white text-xl "/> : ""  }
             </button>
         </div>
     </form>

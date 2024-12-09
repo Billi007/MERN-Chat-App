@@ -6,9 +6,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../../context/AuthContext";
 import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
-
+import signInSchema from "../../schema/signin";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -24,17 +23,6 @@ const Login = () => {
   //   return true;
   // }
 
-  const signInSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email('Invalid email format')
-      .required('Email is required'),
-    password: yup
-      .string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Password is required'),
-  });
-
   const { handleSubmit, register, formState: { errors } } = useForm({
     defaultValues: {
       email: "",
@@ -43,7 +31,6 @@ const Login = () => {
     resolver: yupResolver(signInSchema),
   });
   
-
   const onsubmit = async (data) => {
     setLoading(true);
 
