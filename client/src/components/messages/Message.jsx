@@ -8,7 +8,7 @@ const Message = ({message}) => {
   //console.log("message ka authUser: " + authUser)
  const fromMe = message.senderId === authUser.user._id;
  const chatClassName = fromMe ? "chat-end" : "chat-start";
- const MessageBgColor = fromMe ? "bg-blue-600" : "";
+ const MessageBgColor = fromMe ? "bg-[#2e1065]" : "bg-[#1e1b4b]";
  //const profilePic = fromMe ? authUser.profilePic : selectedConversation?.profilePic;
 
 
@@ -20,7 +20,7 @@ const Message = ({message}) => {
 
   return (
  <div>
-   <div className='p-2 '>
+   <div className='p-1 '>
    <div className={`flex flex-col chat ${chatClassName}`}>
 
 		

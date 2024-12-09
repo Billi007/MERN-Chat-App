@@ -2,10 +2,11 @@ import { useEffect, useState } from "react"
 import Conversation from "./Conversation"
 import axios from "axios"
 import { useAuthContext } from "../../context/AuthContext"
+
 const Conversations = () => {
   const [loading, setLoading] = useState(false);
   const [conversations, setConversations] = useState([]);
- //const BASE_URL = "http://localhost:5000";
+ const BASE_URL = "http://localhost:5000";
  const {authUser} = useAuthContext();
   
   useEffect(() => {
@@ -13,7 +14,7 @@ const Conversations = () => {
       setLoading(true);
 
     try {
-      const response = await axios.get('http://localhost:5000/api/users',
+      const response = await axios.get(`${BASE_URL}/api/users`,
         {withCredentials: true}
       );
   
@@ -38,7 +39,7 @@ const Conversations = () => {
   return (
     <div className="py-2 flex flex-col overflow-auto">
       <h1 className="px-8 py-2 text-white font-semibold bg-slate-800 rounded-md">Messages</h1>
-      <h1 className="text-white">{authUser.user.fullname} </h1>
+      <h1 className="text-white">{authUser.fullname} </h1>
       <div className="py-2 flex-1 overflow-y-auto"
       style={{ maxHeight: "calc(84vh - 10vh)" }}>
       

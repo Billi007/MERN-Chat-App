@@ -66,4 +66,19 @@ const getMesages = async (req, res) => {
   }
 };
 
-export { sendMessage, getMesages };
+// const searchMessages = async (req, res) => {
+//   const { receiverId, query } = req.query;
+// try {
+//   const messages = await Message.find({
+//     receiverId,
+//     content: {$regex: query}
+//   });
+//   if (!messages) return;
+
+//   res.status(200).json(messages);
+// } catch (error) {
+//   console.log(error.message);
+//   res.status(500).json({ error: "can't search messages" });
+// }
+// }
+ export { sendMessage, getMesages };

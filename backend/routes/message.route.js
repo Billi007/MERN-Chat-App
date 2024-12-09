@@ -6,5 +6,6 @@ const router = Router();
 
 router.get('/:id',protectRoute, getMesages);
 router.post('/send/:id', protectRoute, sendMessage);
+// router.get('/search', searchMessages)
 
 export default router;

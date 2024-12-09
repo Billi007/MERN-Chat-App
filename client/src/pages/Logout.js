@@ -1,16 +1,17 @@
-import axios from "axios"
 import { useState } from "react"
+import axios from "axios"
 import toast from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
 
 const useLogout = () => {
     const [loading, setLoadig] = useState(false);
-    const {setAuthUser} = useAuthContext()
+    const {setAuthUser} = useAuthContext();
+    const BASE_URL = "http://localhost:5000";
 
    const Logout = async () => {
     setLoadig(true);
     try {
-        const response = await axios.post('http://localhost:5000/api/auth/logout');
+        const response = await axios.post(`${BASE_URL}/api/auth/logout`);
         toast.success("User logged out successfully!")
 
         if(response.data.error){

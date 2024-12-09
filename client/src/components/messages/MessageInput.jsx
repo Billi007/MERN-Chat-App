@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { useState } from "react";
 import { IoMdSend } from "react-icons/io";
 import useConversation from '../../zustand/UseCoversation'
@@ -51,7 +50,7 @@ const MessageInput = () => {
             placeholder="enter message..."
             />
             <button type="submit" className="absolute inset-y-0 end-0 flex items-center pe-3">
-           {message ?  <IoMdSend className="text-blue-400"/> : ""  }
+           {message ?  <IoMdSend className="text-white"/> : ""  }
             </button>
         </div>
     </form>

@@ -33,7 +33,7 @@ const signup = async (req, res) => {
     const femaleProfilePicture = `https://avatar.iran.liara.run/public/girl?username=${username}`; //Process.env.imageUrl/${username}
     const maleProfilePicture = `https://avatar.iran.liara.run/public/boy?username=${username}`;
 
-    const newUser = new User({
+    const user = new User({
       username,
       email,
       fullname,
@@ -43,14 +43,14 @@ const signup = async (req, res) => {
       gender,
     });
 
-    if (newUser) {
+    if (user) {
       //Generate JWT token here
-      generateToken(newUser._id, res);
-      await newUser.save();
+      generateToken(user._id, res);
+      await user.save();
 
       res.status(201).json({
         message: "User created successfully",
-        newUser,
+        user,
       });
     } else {
       res.status(400).json({ error: "Invalid user data" });

@@ -6,61 +6,67 @@ import {useAuthContext} from "../../context/AuthContext"
 import toast from 'react-hot-toast'
 import { FaUserCircle } from "react-icons/fa";
 import axios from 'axios'
+import { useForm } from 'react-hook-form'
+import * as yup from 'yup'
+import {yupResolver} from '@hookform/resolvers/yup'
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
-  const [inputs, setInputs] = useState({
-    fullname: "",
-    username: "",
-    password: "",
-    email: "",
-    gender: "",
-    confirmPassword: "",
-  });
   const {setAuthUser} = useAuthContext();
+  const BASE_URL = "http://localhost:5000";
 
-  const handleGenderChange = (gender) => {
-    setInputs({...inputs, gender});
-  }
 
-  const hanldeInputErrors = ({fullname,email,username,password, confirmPassword, gender}) => {
-    if(!fullname || !username || !password || !confirmPassword || !gender || !email){
-      toast.error("All fields are required!")
-      return false;
-    }
+  const signupSchema = yup.object().shape({
+    email: yup
+    .string()
+    .email('Invalid email address.')
+    .required('Email is required.'),
 
-    if(password !== confirmPassword){
-    toast.error("Password don't match!");
-   }
+    password: yup
+    .string()
+    .min(6, "Password must be at least 6 characters long")
+    .required("Password is required."),
 
-   if(password.length < 6){
-    toast.error("Password should be at least 6 characters long!")
-    return false;
-   }
-   return true;
-  };
+    confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match.')
+    .required('Password is required.'),
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const {fullname, username,email, password, confirmPassword, gender} = inputs;
-    const success = hanldeInputErrors({fullname,email,username,password, confirmPassword, gender});
-    if( !success) return;
+    username: yup
+    .string().required('Username is required.')
+    .min(3, "Username must be at least 3 characters"),
+
+    fullname: yup
+    .string().required('Full name is required.'),
+
+    gender: yup
+    .string().required('Gender is required.')
+  })
+
+  const {handleSubmit, register, setValue, formState: { errors }} = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      username: "",
+      fullname: "",
+      gender: ""
+    },
+    resolver: yupResolver(signupSchema)
+  })
+
+  const onsubmit = async (data) => {
     setLoading(true);
-    
+
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/signup", {
-        username,
-        email,
-        password,
-        confirmPassword,
-        gender,
-        fullname
-      });
-      setInputs("")
+    
+      const response = await axios.post(`${BASE_URL}/api/auth/signup`, 
+        {...data },
+        {withCredentials:true} );
       
       toast.success("Signup Successfull");
       //localstorage
-      localStorage.setItem('chat-app-user', JSON.stringify(response));
+      localStorage.setItem('chat-app-user', JSON.stringify(response.data));
       //context
       setAuthUser(response.data);
       
@@ -73,7 +79,9 @@ const Signup = () => {
    }
     };
 
-
+    const handleGenderChange = (gender) => {
+      setValue('gender', gender);
+    }
 
   return (
     <div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
@@ -82,44 +90,50 @@ const Signup = () => {
          <FaUserCircle className='text-6xl text-white mb-8' />
          </div>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onsubmit)}>
         <div>
-          <label className='label p-2 '>
-            <span className='text-base label-text font-size'>Full Name</span>
+          <label className='label p-1 '>
+            <span className='text-base label-text font-size'>fullname</span>
           </label>
           <input
+          {...register("fullname")}
             type='text'
             placeholder='John Doe'
             className='w-full input input-bordered h-10'
-            value={inputs.fullname}
-            onChange={(e) => setInputs({ ...inputs, fullname: e.target.value })}
           />
+          {errors.fullname && (
+              <p className="text-red-500 text-sm">{errors.fullname.message}</p>
+            )}
         </div>
 
         <div>
-          <label className='label p-2 '>
+          <label className='label p-1 '>
             <span className='text-base label-text font-size'>Username</span>
           </label>
           <input
+          {...register("username")}
             type='text'
             placeholder='johndoe'
             className='w-full input input-bordered h-10'
-            value={inputs.username}
-            onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
           />
+          {errors.username && (
+              <p className="text-red-500 text-sm">{errors.username.message}</p>
+            )}
         </div>
 
         <div>
-          <label className='label p-2 '>
+          <label className='label p-1 '>
             <span className='text-base label-text font-size'>Email</span>
           </label>
           <input
+          {...register("email")}
             type='text'
             placeholder='john@doe'
-            className='w-full input input-bordered h-10'
-            value={inputs.email}
-            onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+            className='w-full input input-bordered h-10' 
           />
+           {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
         </div>
 
         <div>
@@ -127,30 +141,34 @@ const Signup = () => {
             <span className='text-base label-text font-size'>Password</span>
           </label>
           <input
+          {...register("password")}
             type='password'
             placeholder='Enter Password'
-            className='w-full input input-bordered h-10'
-            value={inputs.password}
-            onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
+            className='w-full input input-bordered h-10' 
           />
+           {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
         </div>
 
         <div>
-          <label className='label'>
+          <label className='label p-1'>
             <span className='text-base label-text font-size'>Confirm Password</span>
           </label>
           <input
+          {...register("confirmPassword")}
             type='password'
             placeholder='Confirm Password'
-            className='w-full input input-bordered h-10'
-            value={inputs.confirmPassword}
-            onChange={(e) => setInputs({ ...inputs, confirmPassword: e.target.value })}
+            className='w-full input input-bordered h-10' 
           />
+           {errors.confirmPassword && (
+              <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
+            )}
         </div>
 
     {/* checking gender */}
 
-    <GenderChecker onCheckGender = {handleGenderChange} selectGender={inputs.gender} />
+    <GenderChecker onCheckGender = {handleGenderChange} selectGender={signupSchema.gender} />
     <div>
     </div>
 
@@ -158,9 +176,10 @@ const Signup = () => {
       Already have a account?
     </Link>
     <button 
-    className='btn btn-block btn-sm mt-4 bg-sky-700 rounded-sm hover:bg-sky-800 border-none text-white' 
+    type='submit'
+    className='btn btn-block btn-sm mt-4 bg-sky-700 rounded-md hover:bg-sky-800 border-none text-white' 
      disabled={loading}>
-			{loading ? <span className='loading loading-spinner '></span> : "Signup"}
+			{loading ? <span className='loading loading-spinner font-thin'></span> : "Signup"}
 		</button>
   </form>
     </div>

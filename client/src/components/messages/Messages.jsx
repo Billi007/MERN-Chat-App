@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from "react"
 import useConversation from "../../zustand/UseCoversation";
+import { useEffect, useRef, useState } from "react"
 import axios from "axios";
 import Message from "./Message";
 import useListenMessages from "./listen-message";
 
 const Messages = () => {
   const [loading, setLoading] = useState(false);
+  useListenMessages();
   const {messages, setMessages,selectedConversation} = useConversation();
   const BASE_URL = "http://localhost:5000";
   const lastMessageRef = useRef();
@@ -37,7 +38,6 @@ const Messages = () => {
     },[selectedConversation, setMessages]);
 
     //listening messages from socket.io server
-    useListenMessages();
 
   useEffect(() => {
     setTimeout(() => {
@@ -59,8 +59,10 @@ const Messages = () => {
          ))}
         
 
-      {loading && messages.length === 0 && (
-        <p className="text-white text-center m-auto">Send a message to start the conversation!</p>
+      { messages.length === 0 && (
+        <div className="mt-52  text-center">
+          <p className="text-white">Send a message to start the conversation </p>
+        </div>
       )}
    
     </div>
