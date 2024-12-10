@@ -1,6 +1,6 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
-import { getReceiverSocketId } from "../SocketIO/socket.js";
+import { getReceiverSocketId, io } from "../SocketIO/socket.js";
 
 //SEND MESSAGE
 const sendMessage = async (req, res) => {
