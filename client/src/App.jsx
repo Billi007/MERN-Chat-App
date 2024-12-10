@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-    <div className='min-h-screen p-4 flex items-center justify-center bg-slate-950  '>
+    <div className='min-h-screen p-4 flex items-center justify-center bg-[#1c1c27]  '>
     <Toaster position="bottom-right" />
     <Routes>
       <Route path='/' element={authUser ? <Home/> : <Navigate to={'/login'} />}/>

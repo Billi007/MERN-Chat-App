@@ -4,7 +4,7 @@ import useLogout from "../../pages/Logout";
 const LogoutBtn = () => {
   const {loading, Logout} = useLogout();
   return (
-    <div className='m-2 mt-8'>
+    <div className='m-3 mt-2'>
    {!loading ? (
   <>
    {/* You can open the modal using document.getElementById('ID').showModal() method */}

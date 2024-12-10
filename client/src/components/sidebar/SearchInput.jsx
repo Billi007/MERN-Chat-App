@@ -27,10 +27,10 @@ const SearchInput = () => {
   return (
    <>
    <div className=" h-[5vh]">
-      <div className="px-4 py-4">
+      <div className="px-4 py-6">
         <form onSubmit={handleSubmit}>
           <div className="flex space-x-3">
-            <label className=" border-[1px] border-gray-700 bg-slate-900 rounded-full p-3 flex items-center w-full">
+            <label className=" border-[1px] text-sm border-gray-700 bg-slate-900 rounded-full p-2.5 flex items-center w-full">
               <input
                 type="text"
                 className="grow outline-none  bg-transparent w-full text-white"

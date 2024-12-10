@@ -10,11 +10,11 @@ const Conversation = ({conversation}) => {
 
   return (
    <>
-    <div className={`hover:bg-slate-600 duration-300 cursor-pointer text-white
-         ${isSelected ? "bg-slate-700" : ""}
+    <div className={`hover:bg-slate-800 duration-300 cursor-pointer text-white
+         ${isSelected ? "bg-slate-900" : ""}
       `}
       onClick={() => setSelectedConversation(conversation)}>
-    <div className="flex space-x-4 px-8 py-3 hover:bg-slate-700 duration-300
+    <div className="flex space-x-3 px-8 py-3 hover:bg-slate-700 duration-300
      cursor-pointer">
        
         <div className={`avatar ${isOnline ? "online" : ""} `}>
@@ -25,7 +25,7 @@ const Conversation = ({conversation}) => {
         </div>
         <div className='flex flex-col flex-1'>
 					<div className='flex gap-3 justify-between'>
-						<p className='text-white'>{conversation.fullname}</p>
+						<p className='text-white text-sm '>{conversation.fullname}</p>
 					</div>
 				</div>
 

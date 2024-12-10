@@ -8,7 +8,7 @@ const Message = ({message}) => {
   //console.log("message ka authUser: " + authUser)
  const fromMe = message.senderId === authUser.user._id;
  const chatClassName = fromMe ? "chat-end" : "chat-start";
- const MessageBgColor = fromMe ? "bg-[#2e1065]" : "bg-[#1e1b4b]";
+ const MessageBgColor = fromMe ? "bg-sky-700" : "bg-slate-800";
  //const profilePic = fromMe ? authUser.profilePic : selectedConversation?.profilePic;
 
 
@@ -24,8 +24,8 @@ const Message = ({message}) => {
    <div className={`flex flex-col chat ${chatClassName}`}>
 
 		
-     <div className={`chat-bubble chat text-white text-sm ${MessageBgColor}`}>{message.message} </div>
-     <div className='text-gray-700 text-xs '>{formattedTime} </div>
+     <div className={`chat-bubble chat text-sm ${MessageBgColor}`}>{message.message} </div>
+     <div className='text-gray-500 text-[10px] '>{formattedTime} </div>
    </div>
   </div>
 

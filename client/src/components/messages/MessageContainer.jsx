@@ -26,7 +26,7 @@ const MessageContainer = () => {
 
   return (
   
-     <div className='md:min-w-[760px] max-w-[750px] flex flex-col overflow-auto '>
+     <div className='md:min-w-[760px]  max-w-[750px] flex flex-col overflow-auto '>
       {!selectedConversation ? (
      <NoChatSelected />
       ): (
@@ -35,14 +35,9 @@ const MessageContainer = () => {
     {/* Header */}
 
        
-   <div className='bg-slate-700 flex flex-col px-2 py-2 mb-2 justify-start items-start overflow-y-auto'>
-    {/* <div className={`avatar `}> 
-          <div className="w-10 rounded-full">
-            <img src={profilePicture}/>
-          </div>
-        </div> */}
-      <span className='text-white font-medium ml-3'> {selectedConversation.fullname} </span>
-      <p className="text-xs text-gray-400 ml-5">
+   <div className='bg-slate-800 flex flex-col px-2 py-2 mb-2 justify-start items-start overflow-y-auto'>
+      <span className='text-white text-sm font-medium ml-3'> {selectedConversation.fullname} </span>
+      <p className="text-xs text-gray-400 ml-5 mt-1">
        {getOnlineStatus(selectedConversation._id)} 
       </p>
       {/* <form onSubmit={handleSerchMessage}>
