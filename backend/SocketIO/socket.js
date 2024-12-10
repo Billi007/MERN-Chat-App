@@ -21,7 +21,9 @@ io.on("connection", (socket) => {
     console.log("new user connected! " + socket.id);
 
     const userid = socket.handshake.query.userId;
-    if(userid != 'undefined') users[userid] = socket.id;
+    if(userid != 'undefined') {
+    users[userid] = socket.id;
+    }
 
     //creating a new event to check if user is online
     io.emit("getOnlineUsers", Object.keys(users))
