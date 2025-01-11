@@ -66,7 +66,7 @@ const Signup = () => {
       <form onSubmit={handleSubmit(onsubmit)}>
         <div>
           <label className='label p-1 '>
-            <span className='text-base label-text font-size'>fullname</span>
+            <span className='text-base label-text font-size'>Fullname</span>
           </label>
           <input
           {...register("fullname")}
@@ -145,9 +145,10 @@ const Signup = () => {
     <div>
     </div>
 
-    <Link to='/login' className="font-size hover:underline hover:text-blue-600 mt-2 inline-block">
-      Already have a account?
-    </Link>
+    <button  className="text-xs mt-2 inline-block text-white">
+          Already have account? <Link to={'/login'} className="hover:underline hover:text-blue-600">Sign up now</Link>
+          </button>
+
     <button 
     type='submit'
     className='btn btn-block btn-sm mt-4 bg-sky-700 rounded-md hover:bg-sky-800 border-none text-white' 
