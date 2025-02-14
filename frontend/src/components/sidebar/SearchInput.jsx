@@ -2,12 +2,12 @@ import { CiSearch } from "react-icons/ci";
 import { useState } from "react";
 import useConversation from '../../zustand/UseCoversation'
 import toast from 'react-hot-toast'
-import { useAuthContext } from "../../context/AuthContext"; 
+import useGetConversations from "../../zustand/UseGetConversation";
 
 const SearchInput = () => {
   const [search, setSearch] = useState("");
   const {setSelectedConversation} = useConversation();
-  const {authUser} = useAuthContext();
+  const {conversations} =  useGetConversations()
 
   const handleSubmit = (e) =>{
     e.preventDefault();
@@ -16,8 +16,8 @@ const SearchInput = () => {
     if(search.length < 3) {
       return toast.error("Search term must be at least 3 characters long");
     }
-    
-    const conversation = authUser.find((convo) => convo.user.fullname.toLowerCase().includes(search.toLowerCase()))
+
+    const conversation = conversations.find((convo) => convo.fullname.toLowerCase().includes(search.toLowerCase()))
     if(conversation){
       setSelectedConversation(conversation);
       setSearch("")

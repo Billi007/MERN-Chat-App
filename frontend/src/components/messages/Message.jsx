@@ -1,16 +1,11 @@
-//import {useAuthContext} from '../../context/AuthContext'
-
 import { useAuthContext } from "../../context/AuthContext";
 
 const Message = ({message}) => {
-  //const {selectedConversation} = useConversation();
   const {authUser} = useAuthContext();
-  //console.log("message ka authUser: " + authUser)
  const fromMe = message.senderId === authUser.user._id;
  const chatClassName = fromMe ? "chat-end" : "chat-start";
  const MessageBgColor = fromMe ? "bg-sky-700" : "bg-slate-800";
  //const profilePic = fromMe ? authUser.profilePic : selectedConversation?.profilePic;
-
 
  const createdAt = new Date(message.createdAt);
  const formattedTime = createdAt.toLocaleTimeString([], {

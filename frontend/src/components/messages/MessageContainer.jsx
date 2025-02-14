@@ -1,19 +1,14 @@
-import './message.css'
 import MessageInput from "./MessageInput"
 import Messages from "./Messages";
 import { TiMessages } from "react-icons/ti";
 import useConversation from '../../zustand/UseCoversation'
-//import { useState } from "react"
 import { useAuthContext } from "../../context/AuthContext";
 import { UseSocketContext } from "../../context/SocketContext";
 import { useEffect } from 'react';
-//import toast from "react-hot-toast";
 
 const MessageContainer = () => {
-  //const [searchMessage, setSearchMessage] = useState("")
   const {selectedConversation, setSelectedConversation} = useConversation();
   const {onlineUsers} = UseSocketContext();
-  //const {message} = useConversation();
 
  const getOnlineStatus = (userId) => {
   return onlineUsers.includes(userId) ? "online" : "offline";
@@ -40,14 +35,6 @@ const MessageContainer = () => {
       <p className="text-xs text-gray-400 ml-5 mt-1">
        {getOnlineStatus(selectedConversation._id)} 
       </p>
-      {/* <form onSubmit={handleSerchMessage}>
-       <input 
-       type="text"
-       value={searchMessage}
-       onChange={e => setSearchMessage(e.target.value)}
-        />
-        <button>Search</button>
-      </form> */}
        
            </div>
 

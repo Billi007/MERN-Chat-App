@@ -17,7 +17,7 @@ const GenderChecker = ({ onCheckGender,selectGender}) => {
             <label className={`label gap-2 cursor-pointer ${selectGender === 'female' ? "selected" : "" }`}>
             <span className="label-text text-white text-xs">Female</span>
             <input 
-            
+    
             onChange={() => onCheckGender("female")} 
             type="checkbox" 
             className="checkbox border-white " />

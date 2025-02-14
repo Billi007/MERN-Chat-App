@@ -1,4 +1,3 @@
-import "./login.css";
 import { FaUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -12,16 +11,7 @@ import signInSchema from "../../schema/signin";
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
-  //const BASE_URL = "http://localhost:5000";
-
-  // function handleInputErrors(username, password) {
-  //   if (!username || !password) {
-  //     toast.error("Please fill in all fields");
-  //     return false;
-  //   }
-  
-  //   return true;
-  // }
+  const BASE_URL = "http://localhost:5000";
 
   const { handleSubmit, register, formState: { errors } } = useForm({
     defaultValues: {
@@ -38,7 +28,7 @@ const Login = () => {
       
 
       // API call to login user
-      const response = await axios.post("http://localhost:5000/api/auth/login",
+      const response = await axios.post(`${BASE_URL}/api/auth/login`,
         {
         email: data.email,
         password: data.password,
@@ -79,7 +69,7 @@ const Login = () => {
             />
           </label>
           {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email.message}</p>
+            <p className="text-red-500 text-xs">{errors.email.message}</p>
           )}
         </div>
 
@@ -93,12 +83,12 @@ const Login = () => {
             />
           </label>
           {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password.message}</p>
+            <p className="text-red-500 text-xs">{errors.password.message}</p>
           )}
         </div>
 
          <button  className="text-xs mt-2 inline-block text-white">
-          {"don't"} have an account? <Link to={'/signup'} className="hover:underline hover:text-blue-600">Sign up now</Link>
+          {"don't"} have an account? <Link to={'/signup'} className="hover:text-sky-600 font-bold" >Sign up now</Link>
           </button>
 
         <div>
@@ -109,7 +99,7 @@ const Login = () => {
             {loading ? (
               <span className="loading loading-spinner"></span>
             ) : (
-              "Login"
+              <div className="font-medium">Login</div>
             )}
           </button>
         </div>

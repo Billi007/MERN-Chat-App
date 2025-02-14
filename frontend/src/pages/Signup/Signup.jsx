@@ -1,4 +1,3 @@
-import './Signup.css'
 import GenderChecker from '../Signup/GenderChecker'
 import { Link} from 'react-router-dom'
 import { useState } from 'react'
@@ -66,13 +65,13 @@ const Signup = () => {
       <form onSubmit={handleSubmit(onsubmit)}>
         <div>
           <label className='label p-1 '>
-            <span className='text-base label-text font-size'>Fullname</span>
+            <span className='text-pretty label-text text-white font-size'>Fullname</span>
           </label>
           <input
           {...register("fullname")}
             type='text'
             placeholder='John Doe'
-            className='w-full input input-bordered h-10'
+            className='w-full input-sm input-bordered h-10 rounded-sm'
           />
           {errors.fullname && (
               <p className="text-red-500 text-sm">{errors.fullname.message}</p>
@@ -81,13 +80,13 @@ const Signup = () => {
 
         <div>
           <label className='label p-1 '>
-            <span className='text-base label-text font-size'>Username</span>
+            <span className='text-pretty label-text text-white font-size'>Username</span>
           </label>
           <input
           {...register("username")}
             type='text'
             placeholder='johndoe'
-            className='w-full input input-bordered h-10'
+            className='w-full input-sm input-bordered h-10 rounded-sm'
           />
           {errors.username && (
               <p className="text-red-500 text-sm">{errors.username.message}</p>
@@ -96,13 +95,13 @@ const Signup = () => {
 
         <div>
           <label className='label p-1 '>
-            <span className='text-base label-text font-size'>Email</span>
+            <span className='text-pretty label-text text-white font-size'>Email</span>
           </label>
           <input
           {...register("email")}
             type='text'
             placeholder='john@doe'
-            className='w-full input input-bordered h-10' 
+            className='w-full input-sm input-bordered h-10 rounded-sm' 
           />
            {errors.email && (
               <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -111,13 +110,13 @@ const Signup = () => {
 
         <div>
           <label className='label'>
-            <span className='text-base label-text font-size'>Password</span>
+            <span className='text-pretty label-text text-white font-size'>Password</span>
           </label>
           <input
           {...register("password")}
             type='password'
             placeholder='Enter Password'
-            className='w-full input input-bordered h-10' 
+            className='w-full input-sm input-bordered h-10 rounded-sm' 
           />
            {errors.password && (
               <p className="text-red-500 text-sm">{errors.password.message}</p>
@@ -126,13 +125,13 @@ const Signup = () => {
 
         <div>
           <label className='label p-1'>
-            <span className='text-base label-text font-size'>Confirm Password</span>
+            <span className='text-pretty label-text text-white font-size'>Confirm Password</span>
           </label>
           <input
           {...register("confirmPassword")}
             type='password'
             placeholder='Confirm Password'
-            className='w-full input input-bordered h-10' 
+            className='w-full input-sm input-bordered h-10 rounded-sm' 
           />
            {errors.confirmPassword && (
               <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
@@ -146,14 +145,14 @@ const Signup = () => {
     </div>
 
     <button  className="text-xs mt-2 inline-block text-white">
-          Already have account? <Link to={'/login'} className="hover:underline hover:text-blue-600">Sign in now</Link>
+          Already have account? <Link to={'/login'} className="hover:text-sky-600 font-bold">Sign in now</Link>
           </button>
 
     <button 
     type='submit'
-    className='btn btn-block btn-sm mt-4 bg-sky-700 rounded-md hover:bg-sky-800 border-none text-white' 
+    className='btn btn-block btn-sm mt-4 bg-sky-700 rounded-sm hover:bg-sky-800 border-none text-white' 
      disabled={loading}>
-			{loading ? <span className='loading loading-spinner font-thin'></span> : "Signup"}
+			{loading ? <span className='loading loading-spinner font-thin'></span> : <div className='font-medium'>Signup</div>}
 		</button>
   </form>
     </div>

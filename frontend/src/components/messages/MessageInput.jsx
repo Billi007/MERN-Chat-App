@@ -16,7 +16,6 @@ const MessageInput = () => {
 
    if(!message) return;
 
-   //console.log("selectedConversation ki id", selectedConversation._id);
     try {
       const response = await axios.post(`${BASE_URL}/api/messages/send/${selectedConversation._id}`, {
         message: message,
