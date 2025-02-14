@@ -13,7 +13,8 @@ const Conversation = ({conversation}) => {
     <div className={`hover:bg-slate-800 duration-300 cursor-pointer text-white
          ${isSelected ? "bg-slate-900" : ""}
       `}
-      onClick={() => setSelectedConversation(conversation)}>
+      onClick={() =>
+        setSelectedConversation(conversation)}>
     <div className="flex space-x-3 px-8 py-3 hover:bg-slate-700 duration-300
      cursor-pointer">
        

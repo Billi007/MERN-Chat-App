@@ -146,7 +146,7 @@ const Signup = () => {
     </div>
 
     <button  className="text-xs mt-2 inline-block text-white">
-          Already have account? <Link to={'/login'} className="hover:underline hover:text-blue-600">Sign up now</Link>
+          Already have account? <Link to={'/login'} className="hover:underline hover:text-blue-600">Sign in now</Link>
           </button>
 
     <button 

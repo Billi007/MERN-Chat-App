@@ -26,7 +26,7 @@ const MessageContainer = () => {
 
   return (
   
-     <div className='md:min-w-[760px]  max-w-[750px] flex flex-col overflow-auto '>
+     <div className='md:w-[600px] md:min-w-[500px] flex flex-col overflow-auto '>
       {!selectedConversation ? (
      <NoChatSelected />
       ): (
@@ -52,7 +52,7 @@ const MessageContainer = () => {
            </div>
 
              <div
-              className=" flex-auto overflow-y-auto"
+              className=" flex-auto overflow-y-auto "
               style={{ maxHeight: "calc(79vh - 18vh)" }}
               >
               <Messages />  
@@ -73,7 +73,7 @@ const {authUser} = useAuthContext();
 
 	return (
 		<div className='flex items-center justify-center w-full h-full'>
-			<div className='px-4 text-center sm:text-lg md:text-xl text-gray-200 font-semibold flex flex-col items-center gap-2'>
+			<div className='px-4 text-center  md:block hidden sm:text-lg md:text-xl text-gray-200 font-semibold flex flex-col items-center gap-2'>
 				<p>Welcome 👋 {authUser.user?.fullname}  ❄</p>
 				<p>Select a chat to start messaging</p>
 				<TiMessages className='text-3xl md:text-6xl text-center' />
