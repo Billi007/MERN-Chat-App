@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 const useGetConversations = () => {
 	const [loading, setLoading] = useState(false);
 	const [conversations, setConversations] = useState([]);
-     const BASE_URL = "http://localhost:5000";
+     const BASE_URL = "https://amazing-bonbon-53c88a.netlify.app";
 
 	useEffect(() => {
 		const getConversations = async () => {

@@ -14,11 +14,9 @@ const [socket, setSocket] = useState(null);
 const [onlineUsers, setOnlineUsers] = useState([]);
 const {authUser} = useAuthContext();
 
-console.log("auth user ki id", authUser);
-
 useEffect(() => {
     if(authUser){
-       const socket = io('http://localhost:5000', {
+       const socket = io('https://amazing-bonbon-53c88a.netlify.app', {
        query: {
         userId : authUser.user?._id
        }});

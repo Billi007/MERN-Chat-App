@@ -8,7 +8,7 @@ const Messages = () => {
   const [loading, setLoading] = useState(false);
   useListenMessages();
   const {messages, setMessages,selectedConversation} = useConversation();
-  const BASE_URL = "http://localhost:5000";
+  const BASE_URL = "https://amazing-bonbon-53c88a.netlify.app";
   const lastMessageRef = useRef();
   
   
@@ -24,8 +24,6 @@ const Messages = () => {
             {withCredentials: true });
             
             setMessages(response.data);
-            console.log("get message", response?.data);
-                 
           } catch (error) {
             console.log("Error fetching message", error.message);
           }

@@ -1,5 +1,4 @@
 const GenderChecker = ({ onCheckGender,selectGender}) => {
-    console.log(selectGender)
     return (
         <div className="flex ">
         <div className="form-control">

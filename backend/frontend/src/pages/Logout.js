@@ -6,7 +6,7 @@ import { useAuthContext } from "../context/AuthContext";
 const useLogout = () => {
     const [loading, setLoadig] = useState(false);
     const {setAuthUser} = useAuthContext();
-    const BASE_URL = "http://localhost:5000";
+    const BASE_URL = "https://amazing-bonbon-53c88a.netlify.app";
 
    const Logout = async () => {
     setLoadig(true);

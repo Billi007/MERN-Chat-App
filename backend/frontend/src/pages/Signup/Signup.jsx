@@ -12,7 +12,7 @@ import signupSchema from '../../schema/signup'
 const Signup = () => {
   const [loading, setLoading] = useState(false);
   const {setAuthUser} = useAuthContext();
-  const BASE_URL = "http://localhost:5000";
+  const BASE_URL = "https://amazing-bonbon-53c88a.netlify.app";
 
 
   const {handleSubmit, register, setValue, formState: { errors }} = useForm({

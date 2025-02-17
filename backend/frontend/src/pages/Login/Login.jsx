@@ -11,7 +11,7 @@ import signInSchema from "../../schema/signin";
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const { setAuthUser } = useAuthContext();
-  const BASE_URL = "http://localhost:5000";
+  const BASE_URL = "https://amazing-bonbon-53c88a.netlify.app";
 
   const { handleSubmit, register, formState: { errors } } = useForm({
     defaultValues: {
@@ -22,7 +22,7 @@ const Login = () => {
   });
   
   const onsubmit = async (data) => {
-    setLoading(true);
+    setLoading(true)
 
     try {
       
@@ -35,7 +35,6 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      console.log( "login success", response)
 
       if (response.status == 201) {
         toast.success("Logged in successfully");

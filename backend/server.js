@@ -16,7 +16,7 @@ dotenv.config();
 app.use(express.json()); // to pasrse incoming routes with JSON payload(from req.body)
 app.use(cookieParser());
 app.use(cors({
-    origin: "http://localhost:8000", // allow requests from the React app
+    origin: "https://amazing-bonbon-53c88a.netlify.app", // allow requests from the React app
     credentials: true, // allow cookies to be sent back to the client
     
 }));

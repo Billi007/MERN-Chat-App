@@ -8,7 +8,7 @@ const MessageInput = () => {
   const [loading, setLoading] = useState("");
   const [message, setMessage] = useState("");
   const {messages, setMessages,selectedConversation} = useConversation();
-  const BASE_URL = "http://localhost:5000"
+  const BASE_URL = "https://amazing-bonbon-53c88a.netlify.app"
 
   const handleSubmit = async (e) => {
    e.preventDefault();
@@ -21,7 +21,6 @@ const MessageInput = () => {
         message: message,
       }, {withCredentials: true, }
     );
-      console.log("send message", response?.data);
       setMessage("");
 
       if(response.data.error){
@@ -30,7 +29,7 @@ const MessageInput = () => {
 
       setMessages([...messages, response.data]);
     } catch (error) {
-      console.log("message ni ja rha hai:: ",error.message)
+      console.log(error.message)
       toast.error("Failed to send message")
     }
     finally{
